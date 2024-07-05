@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController{
     #[Route('/register', name: 'register')]
     public function registerUser(Request $request,
                                  EntityManagerInterface $em,
-                                 UserPasswordHasherInterface $hasher):Response{
+                                 UserPasswordHasherInterface $hasher,
+                                 ValidatorInterface $validator):Response{
         if($request->isMethod('POST')){
             $user = new User();
             $user->setEmail($request->request->get('email'));
@@ -26,11 +26,21 @@ class RegistrationController extends AbstractController{
             $user->setCIN($request->request->get('cin'));
             $user->setRoles(['ROLE_USER']);
             $user->setPassword($hasher->hashPassword($user,$request->request->get('password')));
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('app_login');
+            $errors = $validator->validate($user);
+            if(count($errors) > 0){
+                $errorsString = (string)$errors;
+                return $this->render('security/register.html.twig', [
+                    'errors' => $errors
+                ]);
+            }else {
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('app_login');
+            }
         }
 
-        return $this->render('security/register.html.twig');
+        return $this->render('security/register.html.twig',[
+            'errors' => null
+        ]);
     }
 }

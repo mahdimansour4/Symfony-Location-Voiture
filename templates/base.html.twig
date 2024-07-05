@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,22 +12,42 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link {{ app.current_route == 'home'? 'active' : '' }}" aria-current="page" href="#">Home</a>
-                    <a class="nav-link {{ app.current_route == ''? 'home' : '' }}" href="#">Vehicules</a>
-                    <a class="nav-link {{ app.current_route == 'about'? 'active' : '' }}" href="#">About</a>
-                    <a class="nav-link {{ app.current_route == 'contact'? 'active' : '' }}" href="#">Contact</a>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link {{ app.current_route == 'home'? 'active' : '' }}" aria-current="page" href="{{ path('home') }}">Home</a>
+                        <a class="nav-link {{ app.current_route == ''? 'home' : '' }}" href="#">Vehicules</a>
+                        {% if app.user %}
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                <a href="{{ path('admin') }}" class="nav-link {{ app.current_route() == 'admin'?'active':'' }}">Admin Panel</a>
+                            {% endif %}
+                        {% endif %}
+                        <a class="nav-link {{ app.current_route == 'about'? 'active' : '' }}" href="{{ path('about') }}">A Propos</a>
+                        <a class="nav-link {{ app.current_route == 'contact'? 'active' : '' }}" href="{{ path('contact') }}">Contact</a>
+
+                    </div>
+                </div>
+                <div class="form-inline my-2 my-lg-0">
+                    <div class="navbar-nav">
+                        {% if not app.user %}
+                            <a class="nav-link" href="{{ path('register') }}">Register</a>
+                            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                        {% else %}
+                            <a class="nav-link {{ app.current_route starts with 'user.'?'active':'' }}" href="{{ path('user.show',{id: app.user.id}) }}">Profile</a>
+                            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-        {% block body %}{% endblock %}
+
+        </nav>
+         <div class="container">
+            {% block body %}{% endblock %}
+         </div>
     </body>
 </html>

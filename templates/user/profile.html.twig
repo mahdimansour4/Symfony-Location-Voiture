@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title user.username  ~ "'s Profile" %}
+
+{% block body %}
+    <div class="container">
+        <ul>
+            <li>{{ user.username }}</li>
+            <li>{{ user.email }}</li>
+            <li>{{ user.cIN }}</li>
+            <li>{{ user.telephone }}</li>
+        </ul>
+        <a class="btn btn-primary" href="{{ path('user.edit',{id: user.id}) }}">Modifier</a>
+    </div>
+
+{% endblock %}
