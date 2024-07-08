@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Images" %}
+
+{% block body %}
+<div class="row">
+
+    {% for image in images %}
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ asset('uploads/' ~ image.imagePath) }}" class="card-img-top" alt="image">
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -21,4 +21,7 @@ services:
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
+    App\Service\FileUploaderService:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/uploads'
     # please note that last definitions always *replace* previous ones

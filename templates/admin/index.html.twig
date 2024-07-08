@@ -13,7 +13,7 @@
             <th>Email</th>
             <th>Cin</th>
             <th>Telephone</th>
-            <th>Actions</th>
+            <th>Date de creation</th>
         </tr>
         {% for user in users %}
         <tr>
@@ -21,8 +21,22 @@
             <td>{{ user.email }}</td>
             <td>{{ user.cIN }}</td>
             <td>{{ user.telephone }}</td>
+            <td>{{ user.createdAt | date("m/d/Y") }}</td>
         </tr>
         {% endfor %}
     </table>
+
+    <h1> Here all the images</h1>
+
+    <div class="row">
+
+        {% for image in images %}
+            <div class="col-md-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ asset('uploads/' ~ image.imagePath) }}" class="card-img-top" alt="image">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

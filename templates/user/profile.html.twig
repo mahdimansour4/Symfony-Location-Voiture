@@ -3,14 +3,14 @@
 {% block title user.username  ~ "'s Profile" %}
 
 {% block body %}
-    <div class="container">
-        <ul>
-            <li>{{ user.username }}</li>
-            <li>{{ user.email }}</li>
-            <li>{{ user.cIN }}</li>
-            <li>{{ user.telephone }}</li>
-        </ul>
-        <a class="btn btn-primary" href="{{ path('user.edit',{id: user.id}) }}">Modifier</a>
-    </div>
-
+        <div class="card text-center" style="width: 25rem">
+            <div class="card-body">
+                <ul class="list-group">
+                    <li><h5>{{ user.username }}</h5></li>
+                    <li>{{ user.email }}</li>
+                    <li>{{ user.telephone }}</li>
+                    <li>{{ user.cIN }}</li>
+                </ul>
+            </div>
+        </div>
 {% endblock %}

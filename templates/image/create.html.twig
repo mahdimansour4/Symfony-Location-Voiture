@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title "Creation Image" %}
+    
+{% block body %}
+    <form action="{{ path('image.create') }}" enctype="multipart/form-data" method="post">
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" >
+        <button type="submit">Sauvegarder</button>
+    </form>
+    
+{% endblock %}
+

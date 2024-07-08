@@ -22,6 +22,7 @@ class UserController extends AbstractController{
             $user->setEmail($request->get('email'));
             $user->setTelephone($request->get('telephone'));
             $user->setCIN($request->get('cin'));
+            $user->setCreatedAt(new \DateTimeImmutable('now'));
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('user.show', ['id' => $id]);
