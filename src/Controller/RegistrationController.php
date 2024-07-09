@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,11 @@ class RegistrationController extends AbstractController{
     public function registerUser(Request $request,
                                  EntityManagerInterface $em,
                                  UserPasswordHasherInterface $hasher,
-                                 ValidatorInterface $validator):Response{
+                                 ValidatorInterface $validator,
+                                 ProfileRepository $repository):Response{
+        $profile = $repository->findOneBy([
+            'id' => 2
+        ]);
         if($request->isMethod('POST')){
             $user = new User();
             $user->setEmail($request->request->get('email'));
@@ -26,6 +31,8 @@ class RegistrationController extends AbstractController{
             $user->setCIN($request->request->get('cin'));
             $user->setRoles(['ROLE_USER']);
             $user->setPassword($hasher->hashPassword($user,$request->request->get('password')));
+            $user->setCreatedAt(new \DateTimeImmutable('now'));
+            $profile->addUser($user);
             $errors = $validator->validate($user);
             if(count($errors) > 0){
                 $errorsString = (string)$errors;

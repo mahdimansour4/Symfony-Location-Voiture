@@ -22,13 +22,12 @@
                     <div class="navbar-nav">
                         <a class="nav-link {{ app.current_route == ''? 'home' : '' }}" href="#">Vehicules</a>
                         {% if app.user %}
-                            {% if 'ROLE_ADMIN' in app.user.roles %}
-                                <a href="{{ path('admin') }}" class="nav-link {{ app.current_route() == 'admin'?'active':'' }}">Admin Panel</a>
+                            {% if app.user.profileid.id ==1 %}
+                            <a href="{{ path('admin') }}" class="nav-link {{ app.current_route() == 'admin'?'active':'' }}">Admin Panel</a>
                             {% endif %}
                         {% endif %}
                         <a class="nav-link {{ app.current_route == 'about'? 'active' : '' }}" href="{{ path('about') }}">A Propos</a>
                         <a class="nav-link {{ app.current_route == 'contact'? 'active' : '' }}" href="{{ path('contact') }}">Contact</a>
-
                     </div>
                 </div>
                 <div class="form-inline my-2 my-lg-0">

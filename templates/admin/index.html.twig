@@ -1,42 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title "Admin Panel" %}
+{% block title %}Admin Panel{% endblock %}
 
 {% block body %}
+    {% if isAdmin %}
+        <h1>Admin Users</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nom Utilisateur</th>
+                <th>Email</th>
+                <th>CIN</th>
+                <th>Telephone</th>
+                <th>Date Creation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for admin in admins %}
+                <tr>
+                    <td>{{ admin.username }}</td>
+                    <td>{{ admin.email }}</td>
+                    <td>{{ admin.CIN }}</td>
+                    <td>{{ admin.telephone }}</td>
+                    <td>{{ admin.createdAt | date()}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <h1>Here all the users</h1>
+        <h1>Normal Users</h1>
 
-
-    <table class="table table-bordered">
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Cin</th>
-            <th>Telephone</th>
-            <th>Date de creation</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.cIN }}</td>
-            <td>{{ user.telephone }}</td>
-            <td>{{ user.createdAt | date("m/d/Y") }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h1> Here all the images</h1>
-
-    <div class="row">
-
-        {% for image in images %}
-            <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('uploads/' ~ image.imagePath) }}" class="card-img-top" alt="image">
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nom Utilisateur</th>
+                <th>Email</th>
+                <th>CIN</th>
+                <th>Telephone</th>
+                <th>Date Creation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.CIN }}</td>
+                    <td>{{ user.telephone }}</td>
+                    <td>{{ user.createdAt | date() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You do not have access to view this page.</p>
+    {% endif %}
 {% endblock %}

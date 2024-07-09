@@ -1,4 +1,6 @@
 body {
+    font-family: "Roboto Light",sans-serif;
+    font-size: 15px;
 }
 
 img {
@@ -15,3 +17,8 @@ li {
     margin: 0 auto;
     float: none;
 }
+
+table th {
+    width: 20%;
+}
+
